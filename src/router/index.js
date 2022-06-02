@@ -1,18 +1,18 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
+// import Home from '../views/Home.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/home',
-    name: 'Home',
-    component: Home
+    path:'/',
+    redirect:'/home'
   },
   {
-    path:'/',
-    redirect:'home'
+    path: '/home',
+    // name: 'Home',
+    component: ()=>import('../views/Home.vue')
   },
   {
     path: '/list',
@@ -32,9 +32,15 @@ const routes = [
 ]
 
 const router = new VueRouter({
-  mode: 'history',
+  mode: 'hash',
   base: process.env.BASE_URL,
   routes
 })
+
+const routerPush = VueRouter.prototype.push
+VueRouter.prototype.push = function push(location) {
+  return routerPush.call(this, location).catch((error) => error)
+}
+
 
 export default router
