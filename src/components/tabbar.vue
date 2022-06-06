@@ -62,28 +62,28 @@ export default {
   left: 0;
   right: 0;
   width: 100%;
-  height: 4.6875rem;
-  background: white;
+  height: 3.375rem;
+  background: #fff;
   z-index: 9999;
 }
 ul{
   display: flex;
   justify-content: space-around;
-  height: 4.6875rem;
+  height: 3.375rem;
 }
 .tabbar ul li{
   justify-content: space-around;
   margin: auto 0;
 }
 .tabbar ul li img{
-  height: 2rem;
+  height: 1.5rem;
   text-align: center;
   margin: 0 auto;
   display: block;
   margin-bottom: .1875rem;
 }
 .tabbar ul li span{
-  font-size: 1.1rem;
+  font-size:.75rem;
   text-align: center;
   justify-content: space-around;
 

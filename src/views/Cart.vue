@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import tabbar from '../components/tabbar.vue'
+import tabbar from '@/components/tabbar.vue'
 export default{
 	name:'Cart',
 	components:{tabbar}
