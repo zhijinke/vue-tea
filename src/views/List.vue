@@ -1,19 +1,18 @@
 <template>
-	<div>
-		分类页面
-		<tabbar></tabbar>
-
+	<div class='list'>
+		这是分类
+		<Tabbar></Tabbar> 
 	</div>
 </template>
 
 <script>
-import tabbar from '@/components/tabbar.vue'
-
-export default{
-	name:'List',
-	components:{tabbar}
-}
+import Tabbar from '@/components/common/Tabbar.vue'
+export default {
+  name: "List",
+  components:{
+  	Tabbar
+  }
+};
 </script>
 
-<style>
-</style>
+

@@ -5,7 +5,7 @@
 		</Card>
 		<ul>
 			<li 
-				v-for='(item,index) in like'
+				v-for='(item,index) in likeList'
 				:key='index'
 			>
 				<h2>
@@ -21,19 +21,17 @@
 	</div>
 </template>
 
-
 <script>
 import Card from '@/components/home/Card.vue'
 export default{
 	props:{
-		like:Array
+		likeList:Array
 	},
 	components:{
 		Card
 	}
 }
 </script>
-
 
 <style scoped>
 .like ul{
@@ -71,8 +69,7 @@ export default{
 	font-size:0.426666rem;
 }
 .like img{
-	width: 11rem;
-	height:  11rem;
+	width: 4.693333rem;
+	height: 4.693333rem;
 }
 </style>
-

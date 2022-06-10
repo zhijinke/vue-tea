@@ -6,10 +6,8 @@
 	</div>
 </template>
 
-
 <script>
 </script>
-
 
 <style scoped>
 .title{
@@ -25,22 +23,21 @@
 	content: "";
 	display: block;
 	position: absolute;
-	right: -1rem;
+	right: -0.5rem;
 	top: 50%;
 	margin-top: -4px;
 	width: 8px;
 	height: 8px;
 	border-radius: 50%;
 	background: #d4c0a7;
-
-
+	
 }
 .title span::before{
 	content: "";
 	display: block;
 	position: absolute;
 	top: 50%;
-	left: -1.2rem;
+	left: -0.5rem;
 	margin-top: -4px;
 	width: 8px;
 	height: 8px;
@@ -48,4 +45,3 @@
 	background: #d4c0a7;
 }
 </style>
-

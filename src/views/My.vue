@@ -1,19 +1,16 @@
 <template>
-	<div>
-		我的
-		<tabbar></tabbar>
-
+	<div class='my'>
+		这是我的
+		<Tabbar></Tabbar> 
 	</div>
 </template>
 
 <script>
-import tabbar from '@/components/tabbar.vue'
-
-export default{
-	name:'My',
-	components:{tabbar}
-}
+import Tabbar from '@/components/common/Tabbar.vue'
+export default {
+  name: "My",
+  components:{
+  	Tabbar
+  }
+};
 </script>
-
-<style>
-</style>

@@ -1,98 +1,166 @@
 <template>
-  <div>
-    <Header></Header>
-    <ly-tab v-model="selectedId" :items="items" :options="options" @change='changeTab'> </ly-tab>
-     <div v-for="(item,index) in res" :key="index">
-      <section>
-        <Swiper v-if="item.type == 'swiperList' " :swiper = "swiper"></Swiper>
-      </section>
-      <icons v-if="item.type == 'iconsList' " :icons="icons"></icons>
-      <Recommend v-if="item.type == 'recommendList' " :Recommend="Recommend"></Recommend>
-      <Like v-if="item.type == 'likeList' " :like="like"></Like>
-      <Ad  :ad="ad"></Ad>
-     </div>
-    <tabbar></tabbar>
+  <div class="home">
+	<div class='headers'>
+		<div class='headers-main'>
+			<Header></Header>
+			<ly-tab
+				v-model="selectedId"
+				:items="items"
+				:options="options"
+				@change='changeTab'
+			>
+			</ly-tab>
+		</div>
+	</div>
+	<section ref='wrapper'>
+		<div>
+			<div 
+				v-for='(item,index) in newData'
+				:key='index'
+			>
+				<Swiper 
+					v-if='item.type=="swiperList"'
+					:swiperList='item.data'
+				></Swiper>
+				
+				<Icons 
+					v-if='item.type=="iconsList"'
+					:iconsList='item.data'
+				></Icons>
+				
+				
+				<Recommend 
+					v-if='item.type=="recommendList"'
+					:recommendList='item.data'
+				></Recommend>
+				
+				<Ad 
+					v-if='item.type=="adList"'
+					:adList='item.data'
+				></Ad>
+				
+				<Like 
+					v-if='item.type=="likeList"'
+					:likeList='item.data'
+				></Like>
+			</div>
+		</div>
+	</section>
+	<Tabbar></Tabbar> 
   </div>
-</template> 
+</template>
 
 <script>
-import axios from "axios"
-import tabbar from "@/components/tabbar.vue"
-import Header from "@/components/home/Header.vue"
-import Swiper from "@/components/home/Swiper.vue"
-import icons from "@/components/home/icons.vue"
-import Recommend from "@/components/home/Recommend.vue"
-import Like from "@/components/home/Like.vue"
-import Ad from "@/components/home/Ad.vue"
+import http from '@/common/api/request.js'
+import Header from '@/components/home/Header.vue'
+import Swiper from '@/components/home/Swiper.vue'
+import Icons from '@/components/home/Icons.vue'
+import Recommend from '@/components/home/Recommend.vue'
+import Like from '@/components/home/Like.vue'
+import Ad from '@/components/home/Ad.vue'
+import Tabbar from '@/components/common/Tabbar.vue'
+//引入插件
+import BetterScroll from 'better-scroll'
 export default {
   name: "Home",
-  created(){
-    this.getMessage()
+  data () {
+	return {
+		selectedId: 0,
+		items: [],
+		newData:[],
+		oBetterScroll:'',
+		tBetterScroll:'',
+		options: {
+		  activeColor: '#b0352f'
+		}
+	 }
   },
-  components: { tabbar, Header,Swiper,icons,Recommend,Like,Ad},
-  data() {
-    return {
-      selectedId: 0,
-      value: "1",
-      items: [],
-      swiper:[],
-      icons:[],
-      Recommend:[],
-      like:[],
-      ad:[],
-      res:[],
-      resad:[],
-      options: {
-        activeColor: "red",
-      },
-    };
+  components:{
+	Header,
+	Swiper,
+	Icons,
+	Recommend,
+	Like,
+	Ad,
+	Tabbar
+  },
+  created(){
+	this.getData();
   },
   methods:{
-    
-   async getMessage(){
-      let res = await axios({
-        url:'/api/index_list/0/data/1'
-      })
-      this.res = res.data.data.data
-      this.items = res.data.data.topBar
-      this.swiper = res.data.data.data[0].data
-      this.icons = res.data.data.data[1].data
-      this.Recommend = res.data.data.data[2].data
-      this.like = res.data.data.data[3].data
-    },
-    async addMessage(index){
-      let res = await axios({
-        url:'/api/index_list/'+index+'/data/1'
-      });
-      if( res.data.data.constructor !=Array ){
-        this.res = res.data.data.data;
-      }else{
-        this.res = res.data.data;
-      }
-    },
-    changeTab(item,index){
-      this.addMessage(index)
-    },
+	async getData(){
+		
+		let res = await http.$axios({
+			url:'/api/index_list/0/data/1'
+		});
+			
+		this.items = Object.freeze(res.topBar);
+		this.newData = Object.freeze(res.data);
+			
+		//当dom都加载完毕了再去执行
+		this.$nextTick(()=>{
+			this.oBetterScroll = new BetterScroll(this.$refs.wrapper, {
+			  movable: true,
+			  zoom: true
+			})
+		})
+		
+	},
+	async addData( index ){
+		
+		let res = await http.$axios({
+			url:'/api/index_list/'+index+'/data/1'
+		});
+		
+		if(  res.constructor !=Array ){
+			this.newData = res.data;
+		}else{
+			this.newData = res
+		}
+		
+		this.$nextTick(()=>{
+			this.tBetterScroll = new BetterScroll(this.$refs.wrapper, {
+			  movable: true,
+			  zoom: true
+			})
+		})
+		
+	},
+	changeTab(item,index){
+		this.addData(index)
+	},
+	// watch:{
+	// 	$route(){
+	// 		this.getData()
+	// 	}
+	// }
   }
 };
 </script>
 
 <style scoped>
-
-.ly-tab{
-  margin-top: 2.75rem;
-  background: #ffffff;
-  /* color: red; */
-  position: fixed;
-  width: 100%;
-  position: relative;
+.home{
+	display: flex;
+	flex-direction: column;
+	width: 100vw;
+	height: 100vh;
+	overflow: hidden;
+}
+.headers{
+	width: 100%;
+	height: 2.88rem;
+}
+.headers-main{
+	position: fixed;
+	left:0;
+	top:0;
+}
+section{
+	flex:1;
+	overflow: hidden;
 }
 ::v-deep .ly-tabbar{
-  box-shadow:none !important;
-	border-bottom:none !important;
-}
-.ly-tab-item{
-  /* color: black; */
+	box-shadow:none;
+	border-bottom:none;
 }
 </style>
-

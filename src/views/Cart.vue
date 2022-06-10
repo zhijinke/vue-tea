@@ -1,17 +1,16 @@
 <template>
-	<div>
-		购物车
-		<tabbar></tabbar>
+	<div class='cart'>
+		这是购物车
+		<Tabbar></Tabbar> 
 	</div>
 </template>
 
 <script>
-import tabbar from '@/components/tabbar.vue'
-export default{
-	name:'Cart',
-	components:{tabbar}
-}
+import Tabbar from '@/components/common/Tabbar.vue'
+export default {
+  name: "Cart",
+  components:{
+  	Tabbar
+  }
+};
 </script>
-
-<style>
-</style>

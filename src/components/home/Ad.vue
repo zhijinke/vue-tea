@@ -2,7 +2,7 @@
 	<div class='ad'>
 		<ul>
 			<li
-			v-for='(item,index) in ad'
+			v-for='(item,index) in adList'
 			:key='index'
 			>
 				<img :src="item.imgUrl" />
@@ -11,24 +11,20 @@
 	</div>
 </template>
 
-
 <script>
 export default{
 	props:{
-		ad:[]
+		adList:Array
 	}
 }
 </script>
 
-
 <style scoped>
 .ad{
 	width: 100%;
-	/* height: 2.986666rem; */
 }
 .ad img{
 	width: 100%;
 	height:100%;
 }
 </style>
-

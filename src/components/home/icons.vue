@@ -1,16 +1,17 @@
 <template>
 	<ul class="icons">
-		<li v-for='(item,index) in icons' :key='index'>
+		<li v-for='(item,index) in iconsList' :key='index'>
 			<img :src="item.imgUrl" alt="">
 			<span>{{item.title}}</span>
 		</li>
 	</ul>
 </template>
 
-
 <script>
 export default{
-	props:{icons:Array},
+	props:{
+		iconsList:Array
+	}
 }
 </script>
 
@@ -18,7 +19,7 @@ export default{
 .icons{
 	display: flex;
 	justify-content: space-around;
-	padding:1rem 0;
+	padding:0.4rem 0;
 }
 .icons li{
 	display: flex;
@@ -26,12 +27,11 @@ export default{
 	align-items: center;
 }
 .icons img{
-	width: 1.5rem;
-	height: 1.5rem;
+	width: 1.013333rem;
+	height: 1.013333rem;
 }
 .icons span{
-	padding:.3rem 0;
+	padding:0.16rem 0;
 	font-size:0.426666rem;
 }
 </style>
-
