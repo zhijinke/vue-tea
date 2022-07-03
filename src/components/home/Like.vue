@@ -7,9 +7,10 @@
 			<li 
 				v-for='(item,index) in likeList'
 				:key='index'
+				@click="goDetail(item.id)"
 			>
 				<h2>
-					<img :src="item.imgUrl" alt="">
+					<img v-lazy="item.imgUrl" alt="">
 				</h2>
 				<h3>{{item.name}}</h3>
 				<div>
@@ -29,6 +30,16 @@ export default{
 	},
 	components:{
 		Card
+	},
+	methods:{
+		goDetail(id){
+			this.$router.push({
+				path:'/detail',
+				query:{
+					id
+				}
+			})
+		}
 	}
 }
 </script>
@@ -71,5 +82,10 @@ export default{
 .like img{
 	width: 4.693333rem;
 	height: 4.693333rem;
+}
+.like img[lazy=loading] {
+  	width: 4.693333rem;
+	height: 4.693333rem;
+	background: gray;
 }
 </style>

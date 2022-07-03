@@ -10,6 +10,7 @@
           <input
             type="search"
             v-model="searchVal"
+            ref="myInput"
             placeholder="搜索您喜欢的产品..."
           />
         </form>
@@ -29,7 +30,15 @@ export default {
       searchArr: [],
     };
   },
+  mounted() {
+    // 键盘监听事件
+    window.addEventListener("touchmove", this.myTouchMove, true);
+  },
   methods: {
+    myTouchMove() {
+      //  失去焦点
+      this.$refs.myInput.blur();
+    },
     goBack() {
       this.$router.back();
     },
@@ -102,6 +111,8 @@ header {
 }
 .search-main form input {
   width: 100%;
+  font-size: 15px;
+  color: black;
 }
 .serach-btn {
   font-size: 0.426666rem;

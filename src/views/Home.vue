@@ -101,7 +101,8 @@ export default {
 		this.$nextTick(()=>{
 			this.oBetterScroll = new BetterScroll(this.$refs.wrapper, {
 			  movable: true,
-			  zoom: true
+			  zoom: true,
+			  click:true
 			})
 		})
 		
@@ -154,6 +155,8 @@ export default {
 	position: fixed;
 	left:0;
 	top:0;
+	width: 100%;
+	height: 100%;
 }
 section{
 	flex:1;

@@ -20,10 +20,21 @@ import 'mint-ui/lib/style.css'
 
 Vue.use(MintUI)
 
+// vant
+import Vant from 'vant'; 
+import 'vant/lib/index.css'; 
+Vue.use(Vant);
+
+import fastClick from 'fastclick'
+fastClick.attach(document.body)
+
 Vue.config.productionTip = false;
 
 new Vue({
   router,
   store,
   render: (h) => h(App),
+  beforeCreate(){
+    Vue.prototype.$bus = this // 注册全局事件总线
+  }
 }).$mount("#app");

@@ -9,7 +9,7 @@
           <span @click="deleteSearchList">清空历史记录</span>
         </h2>
         <ul>
-          <li v-for="(item, index) in searchList" :key="index">{{ item }}</li>
+          <li @click="goSearchInfo(item)" v-for="(item, index) in searchList" :key="index">{{ item }}</li>
         </ul>
       </div>
       <div v-else>暂无搜索记录</div>
@@ -36,6 +36,7 @@ export default {
     Tabbar,
   },
   methods: {
+    // 清空历史记录
     deleteSearchList() {
       MessageBox({
         title: "提示",
@@ -48,6 +49,15 @@ export default {
         }
       });
     },
+    // 点击历史记录自动跳转
+    goSearchInfo(item){
+      this.$router.push({
+        name: "list",
+        query: {
+          key: item,
+        },
+      });
+    }
   },
 };
 </script>

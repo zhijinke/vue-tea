@@ -10,3 +10,14 @@ input{
 input:focus{   
 	border:none;
 }
+.container{
+	display: flex;
+	flex-direction: column;
+	width: 100vw;
+	height: 100vh;
+	overflow: hidden;
+}
+.section{
+	flex: 1;
+	overflow: hidden;
+}

@@ -2,30 +2,30 @@
   <div class="search-list">
     <div class="headers">
       <Header></Header>
-      <ul>
-        <li>
-          <div>综合</div>
-        </li>
-        <li>
-          <div>价格</div>
-          <div class="search-filter">
-            <i class="iconfont icon-arrow_up_fat"></i>
-            <i class="iconfont icon-arrow_down_fat"></i>
+      <ul v-if="goodsList.length != 0">
+
+        <li v-for="(item,index) in searchList.data" :key="index"
+        @click="changeTab(index)"
+        
+        >
+        <div :class=" searchList.currentIndex == index?'active':'' ">{{item.name}}</div>
+        <div class="search-filter" v-if="index != 0">
+            <i class="iconfont icon-arrow_up_fat"
+                :class=" item.status == 1 ? 'active' : '' "
+            ></i>
+            <i class="iconfont icon-arrow_down_fat"
+                :class=" item.status == 2 ? 'active' : '' "
+            ></i>
           </div>
         </li>
-        <li>
-          <div>销量</div>
-          <div class="search-filter">
-            <i class="iconfont icon-arrow_up_fat"></i>
-            <i class="iconfont icon-arrow_down_fat"></i>
-          </div>
-        </li>
+
       </ul>
+      <h4 v-else>暂无搜索记录...</h4>
     </div>
     <section>
       <ul>
         <li v-for="(item,index) in goodsList " :key="index">
-					<img :src="item.imgUrl" alt="">
+					<img v-lazy="item.imgUrl" alt="">
 					<h3>{{item.name}}</h3>
 					<div class='price'>
 						<div>
@@ -48,11 +48,33 @@ import Tabbar from "@/components/common/Tabbar.vue";
 export default {
 	data() {
 		return {
-			goodsList:[]
+			goodsList:[],
+      searchList:{
+        currentIndex:0,
+        /*
+            status表示状态 ：1为asc，2为desc
+        */
+        data:[
+          {name:'综合',key:'zh'},
+          {name:'价格',status:0,key:'price'},
+          {name:'销量',status:0,key:'num'}
+        ]
+      }
 		}
 	},
   created() {
     this.getData();
+  },
+  computed:{
+    orderBy(){
+      // 知道当前是哪一个对象
+      let obj = this.searchList.data[this.searchList.currentIndex];
+      // 要向后端传的是升序还是降序的值
+      let val = obj.status == '1' ? 'asc' : 'desc'
+      return {
+        [obj.key]:val
+      }
+    }
   },
   methods: {
     getData() {
@@ -60,12 +82,29 @@ export default {
           url: "/api/goods/shopList",
           params: {
             searchName: this.$route.query.key,
+            ...this.orderBy
           },
         })
         .then((res) => {
           this.goodsList = res
         });
     },
+    changeTab(index){
+      this.searchList.currentIndex = index
+      let item = this.searchList.data[index]
+      // 先把小箭头的状态值都改为0
+      this.searchList.data.forEach((v,i)=>{
+        if(i != index){
+            v.status = 0
+        }
+      })
+      // 修改当前对象小箭头的状态值
+      if(index == this.searchList.currentIndex){
+        item.status = item.status==1?2:1
+      }
+      // 再次发送请求
+      this.getData()
+    }
   },
   watch:{
 	  $route(){
@@ -127,6 +166,11 @@ section ul li img {
   width: 4.533333rem;
   height: 4.533333rem;
 }
+section ul li img[lazy=loading] {
+  width: 4.533333rem;
+  height: 4.533333rem;
+  background: gray;
+}
 section ul li h3 {
   width: 100%;
   font-size: 0.373333rem;
@@ -156,6 +200,9 @@ section ul li .price div:last-child {
   color: #fff;
   background-color: #b0352f;
   border-radius: 0.16rem;
+}
+.active{
+  color: red;
 }
 </style>
 
