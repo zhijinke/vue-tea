@@ -21,9 +21,7 @@ npm run start
 ```
 
 ### mysql文件夹是导出来的数据库文件，直接导入就可以
-```
 
-```
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
