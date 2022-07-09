@@ -20,9 +20,9 @@ npm install
 npm run start
 ```
 
-### Lints and fixes files
+### mysql文件夹是导出来的数据库文件，直接导入就可以
 ```
-npm run lint
+
 ```
 
 ### Customize configuration
