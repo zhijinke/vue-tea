@@ -22,7 +22,6 @@
 					v-if='item.type=="swiperList"'
 					:swiperList='item.data'
 				></Swiper>
-				
 				<Icons 
 					v-if='item.type=="iconsList"'
 					:iconsList='item.data'
@@ -54,7 +53,7 @@
 import http from '@/common/api/request.js'
 import Header from '@/components/home/Header.vue'
 import Swiper from '@/components/home/Swiper.vue'
-import Icons from '@/components/home/Icons.vue'
+import Icons from '../components/home/icons.vue'
 import Recommend from '@/components/home/Recommend.vue'
 import Like from '@/components/home/Like.vue'
 import Ad from '@/components/home/Ad.vue'
